@@ -1,6 +1,6 @@
 local PLUGIN = PLUGIN
 
-PLUGIN.name = "Ammo check"
+PLUGIN.name = "Ammo chek"
 PLUGIN.description = "Check ammo"
 PLUGIN.schema = "Any"
 PLUGIN.author = "boblikut"
@@ -30,7 +30,7 @@ local ShouldBreak = false
 -------------------------------------------------------------------------------------------------------------------- Begining of general hook
 hook.Add("PlayerButtonDown", "PressCheckButtun", function(ply, button) 
 
-if ply:GetActiveWeapon() != ix_hands and ply:GetActiveWeapon() != ix_keys and checkDelay() and button == KEY_O then
+if ply:GetActiveWeapon():GetClass() != 'ix_hands' and ply:GetActiveWeapon():GetClass() != 'ix_keys' and checkDelay() and button == KEY_O then
 setDelay(3)
 ShouldBreak = false
 
@@ -57,7 +57,7 @@ end)
 
 end
 
-if ply:GetActiveWeapon() != ix_hands and ply:GetActiveWeapon() != ix_keys and checkDelay() and button == KEY_I then
+if ply:GetActiveWeapon():GetClass() != 'ix_hands' and ply:GetActiveWeapon():GetClass() != 'ix_keys' and checkDelay() and button == KEY_I then
 setDelay(3)
 ShouldBreak = false
 
