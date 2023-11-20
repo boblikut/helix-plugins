@@ -46,7 +46,7 @@ local ShouldBreak = false
 -------------------------------------------------------------------------------------------------------------------- Begining of general hook
 hook.Add("PlayerButtonDown", "PressCheckButtun", function(ply, button) 
 pcall(function()
-if !IsBanWeapon(BanWeapons,ply) and checkDelay() and button == KEY_O then
+if !IsBanWeapon(BanWeapons,ply) and checkDelay() and button == KEY_O then -- can edit clip check button
 setDelay(3)
 ShouldBreak = false
 
@@ -73,7 +73,7 @@ end)
 
 end
 
-if !IsBanWeapon(BanWeapons,ply) and checkDelay() and button == KEY_I then
+if !IsBanWeapon(BanWeapons,ply) and checkDelay() and button == KEY_I then -- can edit number of clips check button
 setDelay(3)
 ShouldBreak = false
 
