@@ -1,6 +1,6 @@
 local PLUGIN = PLUGIN
 
-PLUGIN.name = "Ammo chek"
+PLUGIN.name = "Ammo check"
 PLUGIN.description = "Check ammo"
 PLUGIN.schema = "Any"
 PLUGIN.author = "boblikut"
