@@ -26,11 +26,27 @@ local function setDelay(delay)
     lastUse = CurTime() + delay
 end 
 
+BanWeapons = {'ix_keys', 'ix_hands'} -- melee weapon and other weapons withot clips
+
+local function IsBanWeapon(bw, ply) 
+
+local ShouldBanWeapon = false
+
+for k, v in ipairs(bw) do
+if v == ply:GetActiveWeapon():GetClass() then
+ShouldBanWeapon = true
+end
+end
+
+return ShouldBanWeapon
+
+end
+
 local ShouldBreak = false
 -------------------------------------------------------------------------------------------------------------------- Begining of general hook
 hook.Add("PlayerButtonDown", "PressCheckButtun", function(ply, button) 
-
-if ply:GetActiveWeapon():GetClass() != 'ix_hands' and ply:GetActiveWeapon():GetClass() != 'ix_keys' and checkDelay() and button == KEY_O then
+pcall(function()
+if !IsBanWeapon(BanWeapons,ply) and checkDelay() and button == KEY_O then
 setDelay(3)
 ShouldBreak = false
 
@@ -57,7 +73,7 @@ end)
 
 end
 
-if ply:GetActiveWeapon():GetClass() != 'ix_hands' and ply:GetActiveWeapon():GetClass() != 'ix_keys' and checkDelay() and button == KEY_I then
+if !IsBanWeapon(BanWeapons,ply) and checkDelay() and button == KEY_I then
 setDelay(3)
 ShouldBreak = false
 
@@ -85,7 +101,7 @@ end)
 end
 
 
-
+end)
 end)
 -------------------------------------------------------------------------------------------------------------------- Ending of general hook
 
@@ -94,8 +110,11 @@ hook.Add( "EntityFireBullets", "Stop Checking", function( entity, data ) -- Shoo
 	local ply = data.Attacker
 	ply:StopSound("weapons/ar2/npc_ar2_reload.wav")
 	ShouldBreak = true
-	ply:SetFOV(0,0.1)
-	ply:SetAction()
-	
+	ply:SetFOV(0,0.01)
+
+	pcall(function() ply:SetAction() end)
+
+
+
 	
 end )
