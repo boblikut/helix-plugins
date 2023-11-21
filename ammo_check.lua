@@ -34,7 +34,7 @@ ix_hands = true
 
 -------------------------------------------------------------------------------------------------------------------- Begining of general hook
 hook.Add("PlayerButtonDown", "PressCheckButtun", function(ply, button)
-
+pcall(function() 
 local ActiveWeapon = ply:GetActiveWeapon():GetClass()
 
 if !BanWeapons[ActiveWeapon] and checkDelay() and button == KEY_O then
@@ -45,7 +45,7 @@ ply.ShouldStopSwitchWeapon = true
 
 ply:SetFOV(85,2)
 ply:EmitSound("weapons/ar2/npc_ar2_reload.wav", 75, 90, 0.5)
-pcall(function() ply:Say('/me проверяет кол - во патронов в магазине') 
+ply:Say('/me проверяет кол - во патронов в магазине') 
 
 ply:SetAction('ПРОВЕРЯЮ КОЛ - ВО ПАТРОНОВ В МАГАЗИНЕ...', 2, function()
 
@@ -57,11 +57,12 @@ ply.ShouldStopSwitchWeapon = false
 end
 
 end)
-end)
+
 
 end
 
 if !BanWeapons[ActiveWeapon] and checkDelay() and button == KEY_I then
+
 setDelay(3)
 ply.ShouldBreakAmmoCheck = false
 ply.ShouldStopSwitchWeapon = true
@@ -69,7 +70,7 @@ ply.ShouldStopSwitchWeapon = true
 
 ply:SetFOV(85,2)
 ply:EmitSound("weapons/ar2/npc_ar2_reload.wav", 75, 90, 0.5)
-pcall(function()
+
 ply:Say('/me проверяет кол - во патрон с собой')
 
 ply:SetAction('ПРОВЕРЯЮ КОЛ - ВО ПАТРОН В РЮКЗАКЕ...', 2, function()
@@ -81,13 +82,13 @@ ply:Say('/me закончил проверку кол - ва патронов с
 ply.ShouldStopSwitchWeapon = false
 end
 
-end)
+
 end)
 
 end
 
 
-
+end)
 end)
 -------------------------------------------------------------------------------------------------------------------- Ending of general hook
 
