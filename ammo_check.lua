@@ -95,11 +95,13 @@ end)
 hook.Add( "EntityFireBullets", "Stop Checking", function( entity, data ) -- Shoot to stop checking
 	
 	local ply = data.Attacker
+	if ply:IsPlayer() then
 	ply:StopSound("weapons/ar2/npc_ar2_reload.wav")
 	ply.ShouldBreakAmmoCheck = true
 	ply:SetFOV(0,0.01)
 	hook.Remove( "PlayerSwitchWeapon", "StopSwitchWeapon" )
 	pcall(function() ply:SetAction() end)
+	end
 	
 end )
 
