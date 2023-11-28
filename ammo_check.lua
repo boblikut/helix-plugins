@@ -40,7 +40,7 @@ local ActiveWeapon = ply:GetActiveWeapon():GetClass()
 if !BanWeapons[ActiveWeapon] and checkDelay() and button == KEY_O then
 
 setDelay(3)
-ply.ShouldBreakAmmoCheckAmmoCheck = false
+ply.ShouldBreakAmmoCheck = false
 ply.ShouldStopSwitchWeapon = true
 
 ply:SetFOV(85,2)
