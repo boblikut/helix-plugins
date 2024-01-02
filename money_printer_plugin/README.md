@@ -1,5 +1,5 @@
 # Money printer plugin
-_delete this file after dowloading_
+_delete README.md file after dowloading_
 
 ## Item creating
 >Copy exemple exemple file(sh_printer_exemple.lua) from money_printer_plugin\items to oney_printer_plugin\items and rename your file(don't forget about sh_ in begining of file name). Then you need edit this file. You can edit this like default helix item, but you need write name of money printer entity in ITEM.PrinterEntity(6th line in exemple item)
