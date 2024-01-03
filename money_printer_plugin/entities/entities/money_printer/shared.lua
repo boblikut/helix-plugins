@@ -10,6 +10,7 @@ ENT.PrinterInterval = 0.75
 ENT.WarmInterval = 1
 ENT.ColdInterval = 1
 ENT.EnergyInterval = 0.1
+ENT.PrinterHealths = 20
 ENT.PerfomanceUpgades = {
 {profit = 100},
 {profit = 200, price = 500},
