@@ -134,19 +134,21 @@ end
 net.Receive("TakeMoney", function(lengh, client)
 local ent = net.ReadEntity()
 if !client.delay_mp or client.delay_mp < CurTime() then
-if ent:GetPos():Distance(client:GetPos()) > 200 and client:GetEyeTrace().Entity == ent then return end
+if ent:GetPos():Distance(client:GetPos()) > 200 and client:GetEyeTrace().Entity != ent then return end
 client:Notify("You took "..ent:GetMoneyAmount().." tokens from money printer")
 local character = client:GetCharacter()
 character:SetMoney(ent:GetMoneyAmount() + character:GetMoney())
 ent:SetMoneyAmount(0)
 client.delay_mp = CurTime() + 1
+else
+	client:Notify("You use printer too often")
 end
 end)
 
 net.Receive("PerfUpgrade", function(lengh, client)
 local ent = net.ReadEntity()
 if !client.delay_mp or client.delay_mp < CurTime() then
-if ent:GetPos():Distance(client:GetPos()) > 200 and client:GetEyeTrace().Entity == ent then return end
+if ent:GetPos():Distance(client:GetPos()) > 200 and client:GetEyeTrace().Entity != ent then return end
 local character = client:GetCharacter()
 if ent.PerfomanceUpgades[ent:GetCurrPerfLVL() + 1] and (character:GetMoney() >= ent.PerfomanceUpgades[ent:GetCurrPerfLVL() + 1].price) then
 	ent:SetCurrPerfLVL(ent:GetCurrPerfLVL() + 1)
@@ -158,13 +160,15 @@ else
 	client:Notify("You already have max LVL of perfomance!")
 end
 client.delay_mp = CurTime() + 1
+else
+	client:Notify("You use printer too often")
 end
 end)
 
 net.Receive("OffOn", function(lengh, client)
 local ent = net.ReadEntity()
 if !client.delay_mp or client.delay_mp < CurTime() then
-if ent:GetPos():Distance(client:GetPos()) > 200 and client:GetEyeTrace().Entity == ent then return end
+if ent:GetPos():Distance(client:GetPos()) > 200 and client:GetEyeTrace().Entity != ent then return end
 if ent:GetIsWorking() then
 ent:SetIsWorking(false)
 ent:StopSound(ent.PrinterSound)
@@ -173,12 +177,14 @@ ent:SetIsWorking(true)
 ent:EmitSound(ent.PrinterSound, 75, 100, 0.3)
 end
 client.delay_mp = CurTime() + 1
+else
+	client:Notify("You use printer too often")
 end
 end)
 
 net.Receive("WarmUpgrade", function(lengh, client)
 if !client.delay_mp or client.delay_mp < CurTime() then
-if ent:GetPos():Distance(client:GetPos()) > 200 and client:GetEyeTrace().Entity == ent then return end
+if ent:GetPos():Distance(client:GetPos()) > 200 and client:GetEyeTrace().Entity != ent then return end
 local ent = net.ReadEntity()
 local character = client:GetCharacter()
 if ent.WarmUpgades[ent:GetCurrWarmLVL() + 1] and (character:GetMoney() >= ent.WarmUpgades[ent:GetCurrWarmLVL() + 1].price) then
@@ -191,13 +197,15 @@ else
 	client:Notify("You already have max LVL of cooling!")
 end
 client.delay_mp = CurTime() + 1
+else
+	client:Notify("You use printer too often")
 end
 end)
 
 net.Receive("Take", function(lengh, client)
 local ent = net.ReadEntity()
 if !client.delay_mp or client.delay_mp < CurTime() then
-if ent:GetPos():Distance(client:GetPos()) > 200 and client:GetEyeTrace().Entity == ent then return end
+if ent:GetPos():Distance(client:GetPos()) > 200 and client:GetEyeTrace().Entity != ent then return end
 local character = client:GetCharacter()
 local inventory = character:GetInventory()
 client:Notify("Printer was added to your inventory")
@@ -213,13 +221,15 @@ Energy = ent:GetEnergy()
 item:SetData("PrinterData", printer_data)
 ent:Remove()
 client.delay_mp = CurTime() + 1
+else
+	client:Notify("You use printer too often")
 end
 end)
 
 net.Receive("Reboot", function(lengh, client)
 local ent = net.ReadEntity()
 if !client.delay_mp or client.delay_mp < CurTime() then
-if ent:GetPos():Distance(client:GetPos()) > 200 and client:GetEyeTrace().Entity == ent then return end
+if ent:GetPos():Distance(client:GetPos()) > 200 and client:GetEyeTrace().Entity != ent then return end
 local character = client:GetCharacter()
 if character:GetMoney() >= ent.RebootPrice then
 	client:Notify("You rebooted the printer!")
@@ -231,5 +241,7 @@ else
 	client:Notify("You haven't enough money to buy this")
 end
 client.delay_mp = CurTime() + 1
+else
+	client:Notify("You use printer too often")
 end
 end)
