@@ -20,3 +20,7 @@ _delete README.md file after dowloading_
 >* ENT.ENT.WarmUpgades - table of tables, that has description of every Warm Upgade. Where "_WarmSpeed_" is how many % of warm soawn every ENT.WarmInterval and where "_price_" is price of upgrade(_Check exemple file. You can make LVLs as much as you like_)
 >* ENT.ReturnItem - item, that entity should return after pressing "Take" button
 >* ENT.RebootPrice - price of printer reboot
+
+### Change log
+>* __02.01.2024__ - addon created
+>* __03.01.2024__ - added energy and reboot system
