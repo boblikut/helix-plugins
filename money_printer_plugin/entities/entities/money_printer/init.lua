@@ -49,7 +49,7 @@ function ENT:Initialize()
 	self.timer = CurTime()
 	self.warm_timer = CurTime()
 	self.energy_timer = CurTime()
-	self.healths = 20
+	self.healths = self.PrinterHealths
 	self:SetCurrPerfLVL(1)
 	self:SetCurrWarmLVL(1)
 	self:SetIsWorking(true)
