@@ -22,5 +22,5 @@ _delete README.md file after dowloading_
 >* ENT.RebootPrice - price of printer reboot
 
 ### Change log
->* __02.01.2024__ - addon created
+>* __02.01.2024__ - plugin created
 >* __03.01.2024__ - added energy and reboot system
