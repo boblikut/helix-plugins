@@ -183,9 +183,9 @@ end
 end)
 
 net.Receive("WarmUpgrade", function(lengh, client)
+local ent = net.ReadEntity()
 if !client.delay_mp or client.delay_mp < CurTime() then
 if ent:GetPos():Distance(client:GetPos()) > 200 and client:GetEyeTrace().Entity != ent then return end
-local ent = net.ReadEntity()
 local character = client:GetCharacter()
 if ent.WarmUpgades[ent:GetCurrWarmLVL() + 1] and (character:GetMoney() >= ent.WarmUpgades[ent:GetCurrWarmLVL() + 1].price) then
 	ent:SetCurrWarmLVL(ent:GetCurrWarmLVL() + 1)
