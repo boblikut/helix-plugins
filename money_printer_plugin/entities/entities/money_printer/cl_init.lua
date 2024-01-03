@@ -109,7 +109,6 @@ local WarmUpgradeBtn = vgui.Create("DButton", frame)
 		else
 			self:SetText("Cooling Upgrade(LVL "..(ent:GetCurrWarmLVL() + 1)..") - "..ent.WarmUpgades[ent:GetCurrWarmLVL() + 1].price.." tokens")
 		end
-		print("jopa")
 	end
 	function WarmUpgradeBtn:DoClick()
 		net.Start("WarmUpgrade")
