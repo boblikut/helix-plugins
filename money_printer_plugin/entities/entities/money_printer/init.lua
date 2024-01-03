@@ -6,6 +6,7 @@ include("shared.lua")
 local interval = ENT.PrinterInterval
 local warm_interval = ENT.WarmInterval
 local cold_interval = ENT.ColdInterval
+local energy_interval = ENT.EnergyInterval
 
 local lastUse = 0
 
@@ -37,6 +38,7 @@ util.AddNetworkString("OffOn")
 util.AddNetworkString("WarmUpgrade")
 util.AddNetworkString("Take")
 util.AddNetworkString("GetPrinterData")
+util.AddNetworkString("Reboot")
 
 function ENT:Initialize()
 	self:SetModel(self.PrinterModel)
@@ -46,12 +48,13 @@ function ENT:Initialize()
 	
 	self.timer = CurTime()
 	self.warm_timer = CurTime()
+	self.energy_timer = CurTime()
 	self.healths = 20
 	self:SetCurrPerfLVL(1)
 	self:SetCurrWarmLVL(1)
 	self:SetIsWorking(true)
 	self:SetWarm(0)
-	
+	self:SetEnergy(100)
 	
 	if self:GetNetVar("PrinterData", false) then
 		local printer_data_from_item = self:GetNetVar("PrinterData", false)
@@ -59,6 +62,7 @@ function ENT:Initialize()
 		self:SetCurrWarmLVL(printer_data_from_item["CurrWarmLVL"])
 		self:SetMoneyAmount(printer_data_from_item["MoneyAmount"])
 		self:SetWarm(printer_data_from_item["Warm"])
+		self:SetEnergy(printer_data_from_item["Energy"])
 	end
 	
 	local phys = self:GetPhysicsObject()
@@ -72,12 +76,12 @@ end
 
 function ENT:Think()
 
-if (CurTime() > (self.timer + interval)) and self:GetIsWorking() then
+if (CurTime() > (self.timer + interval)) and self:GetIsWorking()  and self:GetEnergy() > 0 then
 	self.timer = CurTime()	
 	self:SetMoneyAmount(self:GetMoneyAmount() + self.PerfomanceUpgades[self:GetCurrPerfLVL()].profit)
 end
 
-if (CurTime() > (self.warm_timer + warm_interval)) and self:GetIsWorking() then
+if (CurTime() > (self.warm_timer + warm_interval)) and self:GetIsWorking()  and self:GetEnergy() > 0 then
 	self.warm_timer = CurTime()	
 	self:SetWarm(math.min(self:GetWarm() + self.WarmUpgades[self:GetCurrWarmLVL()].WarmSpeed, 100))
 end
@@ -87,9 +91,18 @@ if !self:GetIsWorking() and (CurTime() > (self.warm_timer + cold_interval)) then
 	self:SetWarm(math.max(self:GetWarm() - self.WarmUpgades[1].WarmSpeed, 0))
 end
 
+if self:GetIsWorking() and self:GetEnergy() > 0 and (CurTime() > self.energy_timer + energy_interval) then
+	self.energy_timer = CurTime()
+	self:SetEnergy(self:GetEnergy() - 1)
+end
+
 if self:GetWarm() == 100 then
 	self.ShouldBoom = true
 	self:Remove()
+end
+
+if self:GetEnergy() == 0 then
+	self:StopSound(self.PrinterSound)
 end
 
 end
@@ -176,8 +189,23 @@ local printer_data = {
 MoneyAmount = ent:GetMoneyAmount(),
 CurrPerfLVL = ent:GetCurrPerfLVL(),
 CurrWarmLVL = ent:GetCurrWarmLVL(),
-Warm = ent:GetWarm()
+Warm = ent:GetWarm(),
+Energy = ent:GetEnergy()
 }
 item:SetData("PrinterData", printer_data)
 ent:Remove()
+end)
+
+net.Receive("Reboot", function(lengh, client)
+local ent = net.ReadEntity()
+local character = client:GetCharacter()
+if character:GetMoney() >= ent.RebootPrice then
+	client:Notify("You rebooted the printer!")
+	ent:SetEnergy(100)
+	ent:StopSound(ent.PrinterSound)
+	ent:EmitSound(ent.PrinterSound, 75, 100, 0.3)
+	ent:SetIsWorking(true)
+else
+	client:Notify("You haven't enough money to buy this")
+end
 end)
