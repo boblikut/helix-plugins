@@ -8,7 +8,7 @@ ITEM.PrinterEntity = "money_printer"
 function ITEM:GetDescription()
 if self:GetData("PrinterData", false) then
 local data = self:GetData("PrinterData", false)
-return string.format("%s\nMoney amount: %d\nPerfomance LVL: %d\nCooling LVL: %d", self.description, data["MoneyAmount"], data["CurrPerfLVL"], data["CurrWarmLVL"])
+return string.format("%s\nMoney amount: %d\nPerfomance LVL: %d\nCooling LVL: %d\nEnergy: %d", self.description, data["MoneyAmount"], data["CurrPerfLVL"], data["CurrWarmLVL"], data["Energy"])
 else
 return self.description
 end
