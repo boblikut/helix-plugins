@@ -14,6 +14,9 @@ _delete README.md file after dowloading_
 >* ENT.PrinterInterval - interval between spawn of money in printer
 >* ENT.WarmInterval - how often add % of warm
 >* ENT.ColdInterval - how often diminish % of warm
+>* ENT.EnergyInterval - how often diminish % of energy
+>* ENT.PrinterHealths - HP of printer
 >* ENT.PerfomanceUpgades - table of tables, that has description of every Perfomance Upgade. Where "_profit_" is how many money spawn every ENT.PrinterInterval and where "_price_" is price of upgrade(_Check exemple file. You can make LVLs as much as you like_)
 >* ENT.ENT.WarmUpgades - table of tables, that has description of every Warm Upgade. Where "_WarmSpeed_" is how many % of warm soawn every ENT.WarmInterval and where "_price_" is price of upgrade(_Check exemple file. You can make LVLs as much as you like_)
 >* ENT.ReturnItem - item, that entity should return after pressing "Take" button
+>* ENT.RebootPrice - price of printer reboot
