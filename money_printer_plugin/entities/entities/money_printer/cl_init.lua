@@ -58,108 +58,100 @@ local TakeMoneyBtn = vgui.Create("DButton", frame)
 	TakeMoneyBtn:SetSize(200,50)
 	TakeMoneyBtn:SetText("Take money")
 	function TakeMoneyBtn:DoClick()
-	net.Start("TakeMoney")
-	net.WriteEntity(ent)
-	net.SendToServer()
+		net.Start("TakeMoney")
+		net.WriteEntity(ent)
+		net.SendToServer()
 	end
 local MoneyCount = vgui.Create("DLabel", frame)
 	MoneyCount:SetPos(50,50)
 	MoneyCount:SetSize(500,50)
 	MoneyCount:SetFont("CloseCaption_Bold")
-	hook.Add( "Think", "MoneyCounter"..ply:Nick(), function()
-		MoneyCount:SetText("Current money amount: "..ent:GetMoneyAmount())
-	end )
+	MoneyCount.Think = function(self)
+		self:SetText("Current money amount: "..ent:GetMoneyAmount())
+	end
 local PerfUpgradeBtn = vgui.Create("DButton", frame)
 	PerfUpgradeBtn:SetPos(550,150)
 	PerfUpgradeBtn:SetSize(200,50)
-	hook.Add( "Think", "PerfUpgradeBtn Text Update"..ply:Nick(), function()
-	if ent.PerfomanceUpgades[ent:GetCurrPerfLVL() + 1] == nil then
-		PerfUpgradeBtn:SetText("You have max LVL of perfomence")
-	else
-		PerfUpgradeBtn:SetText("Perfomance Upgrade(LVL "..(ent:GetCurrPerfLVL() + 1)..") - "..ent.PerfomanceUpgades[ent:GetCurrPerfLVL() + 1].price.." tokens")
+	PerfUpgradeBtn.Think = function(self)
+		self:SetText("Current money amount: "..ent:GetMoneyAmount())
+		if ent.PerfomanceUpgades[ent:GetCurrPerfLVL() + 1] == nil then
+			self:SetText("You have max LVL of perfomence")
+		else
+			self:SetText("Perfomance Upgrade(LVL "..(ent:GetCurrPerfLVL() + 1)..") - "..ent.PerfomanceUpgades[ent:GetCurrPerfLVL() + 1].price.." tokens")
+		end
 	end
-	end)
 	function PerfUpgradeBtn:DoClick()
-	net.Start("PerfUpgrade")
-	net.WriteEntity(ent)
-	net.SendToServer()
+		net.Start("PerfUpgrade")
+		net.WriteEntity(ent)
+		net.SendToServer()
 	end
 local OffOnBtn = vgui.Create("DButton", frame)
 	OffOnBtn:SetPos(550,450)
 	OffOnBtn:SetSize(200,50)
-	hook.Add( "Think", "OffOnBtn Text Update"..ply:Nick(), function()
-	if ent:GetIsWorking() then
-		OffOnBtn:SetText("Off")
-	else
-		OffOnBtn:SetText("On")
+	OffOnBtn.Think = function(self)
+		if ent:GetIsWorking() then
+			self:SetText("Off")
+		else
+			self:SetText("On")
+		end
 	end
-	end)
 	function OffOnBtn:DoClick()
-	net.Start("OffOn")
-	net.WriteEntity(ent)
-	net.SendToServer()
+		net.Start("OffOn")
+		net.WriteEntity(ent)
+		net.SendToServer()
 	end
 local WarmUpgradeBtn = vgui.Create("DButton", frame)
 	WarmUpgradeBtn:SetPos(550,250)
 	WarmUpgradeBtn:SetSize(200,50)
-	hook.Add( "Think", "WarmUpgradeBtn Text Update"..ply:Nick(), function()
-	if ent.PerfomanceUpgades[ent:GetCurrWarmLVL() + 1] == nil then
-		WarmUpgradeBtn:SetText("You have max LVL of cooling")
-	else
-		WarmUpgradeBtn:SetText("Cooling Upgrade(LVL "..(ent:GetCurrWarmLVL() + 1)..") - "..ent.WarmUpgades[ent:GetCurrWarmLVL() + 1].price.." tokens")
+	WarmUpgradeBtn.Think = function(self)
+		if ent.PerfomanceUpgades[ent:GetCurrWarmLVL() + 1] == nil then
+			self:SetText("You have max LVL of cooling")
+		else
+			self:SetText("Cooling Upgrade(LVL "..(ent:GetCurrWarmLVL() + 1)..") - "..ent.WarmUpgades[ent:GetCurrWarmLVL() + 1].price.." tokens")
+		end
 	end
-	end)
 	function WarmUpgradeBtn:DoClick()
-	net.Start("WarmUpgrade")
-	net.WriteEntity(ent)
-	net.SendToServer()
+		net.Start("WarmUpgrade")
+		net.WriteEntity(ent)
+		net.SendToServer()
 	end
 local TakeBtn = vgui.Create("DButton", frame)
 	TakeBtn:SetPos(550,350)
 	TakeBtn:SetSize(200,50)
 	TakeBtn:SetText("Take printer")
 	function TakeBtn:DoClick()
-	net.Start("Take")
-	net.WriteEntity(ent)
-	net.SendToServer()
-	frame:Close()
+		net.Start("Take")
+		net.WriteEntity(ent)
+		net.SendToServer()
+		frame:Close()
 	end
 local WarmLabel = vgui.Create("DLabel", frame)
 	WarmLabel:SetPos(50,150)
 	WarmLabel:SetSize(500,50)
 	WarmLabel:SetFont("CloseCaption_Bold")
-	hook.Add( "Think", "WarmCounter"..ply:Nick(), function()
-		WarmLabel:SetText("Warm: "..ent:GetWarm().." %")
-	end )
-	
-frame.PaintOver = function( self, w, h )
-  if ( LocalPlayer():Alive()  ) then return end
-  self:Remove()
+	WarmLabel.Think = function(self)
+		self:SetText("Warm: "..ent:GetWarm().." %")
+	end
+frame.Think = function(self)
+	if !LocalPlayer():Alive() then
+		self:Close()
+	end
 end
 
 local EnergyCount = vgui.Create("DLabel", frame)
 	EnergyCount:SetPos(50,250)
 	EnergyCount:SetSize(500,50)
 	EnergyCount:SetFont("CloseCaption_Bold")
-	hook.Add( "Think", "EnergyCounter"..ply:Nick(), function()
-		EnergyCount:SetText("Energy: "..ent:GetEnergy().." %")
-	end )
+	EnergyCount.Think = function(self)
+		self:SetText("Energy: "..ent:GetEnergy().." %")
+	end
 local RebootBtn = vgui.Create("DButton", frame)
 	RebootBtn:SetPos(300,450)
 	RebootBtn:SetSize(200,50)
 	RebootBtn:SetText("Reboot - "..ent.RebootPrice.." $")
 	function RebootBtn:DoClick()
-	net.Start("Reboot")
-	net.WriteEntity(ent)
-	net.SendToServer()
+		net.Start("Reboot")
+		net.WriteEntity(ent)
+		net.SendToServer()
 	end
-function frame:OnClose()
-	hook.Remove( "Think", "Close on death"..ply:Nick())
-	hook.Remove("Think", "MoneyCounter"..ply:Nick())
-	hook.Remove("Think", "PerfUpgradeBtn Text Update"..ply:Nick())
-	hook.Remove( "Think", "OffOnBtn Text Update"..ply:Nick())
-	hook.Remove( "Think", "WarmUpgradeBtn Text Update"..ply:Nick())
-	hook.Remove( "Think", "WarmCounter"..ply:Nick())
-	hook.Remove("Think", "EnergyCounter"..ply:Nick())
-end
 end)
