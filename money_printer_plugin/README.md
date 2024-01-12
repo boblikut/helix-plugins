@@ -24,4 +24,5 @@ _delete README.md file after dowloading_
 ### Change log
 >* __02.01.2024__ - plugin created
 >* __03.01.2024__ - added energy and reboot system
->* __03.01.2024__(5 PM +3 GTM) - security fix(thanks Evgeny Akabenko, Phoenixf, TankNut)  
+>* __03.01.2024__(5 PM +3 GTM) - security fix(thanks Evgeny Akabenko, Phoenixf, TankNut)
+>* __09.01.2024__ - Amogus Fix(thanks Vondar(Umoritelno))  
