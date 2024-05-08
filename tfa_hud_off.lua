@@ -8,4 +8,5 @@ function PLUGIN:PlayerInitialSpawn(ply, trans)
   ply:SendLua(string.format([[RunConsoleCommand("cl_tfa_hud_crosshair_enable_custom",0)]]))
   ply:SendLua(string.format([[RunConsoleCommand("cl_tfa_hud_enabled",0)]]))
   ply:SendLua(string.format([[RunConsoleCommand("cl_tfa_hud_fallback_enabled",0)]]))
+  ply:SendLua(string.format([[RunConsoleCommand("cl_tfa_hud_keybindhints_enabled",0)]]))
 end
