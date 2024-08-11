@@ -8,7 +8,7 @@ PLUGIN.description = "Automaticaly set bDropOnDeath flag on items that you need"
 local base_list = {
 base_weapon = true,
 base_armor = true,
-base_autfit = true,
+base_outfit = true,
 base_writing = true
 }
 
