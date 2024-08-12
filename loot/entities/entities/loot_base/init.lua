@@ -22,7 +22,7 @@ function ENT:OnTakeDamage(dmg)
 	if self.HP <= 0 then
 		local pos = self:GetPos()
 		local name = self:GetClass()
-		ix.item.Spawn(table.Random(self.Items), pos)
+		ix.item.Spawn(self.Items[math.random(#self.Items)], pos)
 		timer.Create("Respawning "..self:EntIndex(), self.RespawnTime, 1, function() 
 			local ent = ents.Create(name)
 			ent:SetPos(pos)
