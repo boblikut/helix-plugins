@@ -12,9 +12,15 @@ base_outfit = true,
 base_writing = true
 }
 
+--and except this items:
+local item_list = {
+	flashlight = true,
+	pda = true
+}
+
 function PLUGIN:InitializedPlugins() 
 	for _, v in pairs(ix.item.list) do
-		if !base_list[v.base] then
+		if !base_list[v.base] and !item_list[v.uniqueID] then
 			v.bDropOnDeath = true
 		end
 	end
