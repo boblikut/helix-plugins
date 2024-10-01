@@ -43,29 +43,29 @@ local CITIZEN_MODELS = {
 
 function ix.faction.Generate(args)
     local FACTION = {}
-	FACTION.models = CITIZEN_MODELS
-	FACTION.index = table.Count(ix.faction.teams) + 1
-	FACTION.color = ix.config.Get("color", Color(150, 125, 100, 255))
-	FACTION.isDefault = false
+    FACTION.models = CITIZEN_MODELS
+    FACTION.index = table.Count(ix.faction.teams) + 1
+    FACTION.color = ix.config.Get("color", Color(150, 125, 100, 255))
+    FACTION.isDefault = false
     for k, v in pairs(args) do
-		FACTION[k] = v
-	end
+	FACTION[k] = v
+    end
     team.SetUp(FACTION.index, FACTION.name or "Unknown", FACTION.color)
-	for _, v2 in pairs(FACTION.models) do
-		if (isstring(v2)) then
-			util.PrecacheModel(v2)
-		elseif (istable(v2)) then
-			util.PrecacheModel(v2[1])
-		end
+    for _, v2 in pairs(FACTION.models) do
+	if (isstring(v2)) then
+		util.PrecacheModel(v2)
+	elseif (istable(v2)) then
+		util.PrecacheModel(v2[1])
 	end
-	if (!FACTION.GetModels) then
-		function FACTION:GetModels(client)
-			return self.models
-		end
+    end
+    if (!FACTION.GetModels) then
+	function FACTION:GetModels(client)
+		return self.models
 	end
-	ix.faction.indices[FACTION.index] = FACTION
+    end
+    ix.faction.indices[FACTION.index] = FACTION
     ix.faction.teams[FACTION.uniqueID] = FACTION
-	_G[FACTION.enum] = FACTION.index
+    _G[FACTION.enum] = FACTION.index
     return FACTION
 end
 
