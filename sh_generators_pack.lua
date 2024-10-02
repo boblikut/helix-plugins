@@ -74,6 +74,7 @@ function ix.item.Generate(uniqueID, base, args)
 	for k, v in pairs(args) do
 		ITEM[k] = v
 	end
+	return ITEM
 end
 
 --FIELDS TO FILL IN
