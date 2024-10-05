@@ -91,7 +91,7 @@ if CLIENT then
 	})
 	local lastName
 	function PLUGIN:HUDPaint()
-		if true and lastEntity and lastEntity:IsValid() and (lastEntity:GetNetVar("player") or lastEntity:IsPlayer()) then
+		if alpha < 255 and lastEntity and lastEntity:IsValid() and (lastEntity:GetNetVar("player") or lastEntity:IsPlayer()) then
 			alpha = math.min(alpha + apearTimeCalculated, 255)
 		elseif alpha > 0 then
 			alpha = math.max(alpha - disapearTimeCalculated, 0)
