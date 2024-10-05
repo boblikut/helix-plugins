@@ -65,10 +65,12 @@ if CLIENT then
 					end
 
 					local infoPanel = vgui.Create(ix.option.Get("minimalTooltips", false) and "ixTooltipMinimal" or "ixTooltip")
-					local entityPlayer = lastEntity:GetNetVar("player") or lastEntity:IsPlayer()
-					local target = lastEntity:GetCharacter()
-					if (entityPlayer and target) then
-						name = hookRun("GetCharacterName", lastEntity) or target:GetName()
+					local entityPlayer = lastEntity:GetNetVar("player")
+					if (entityPlayer) then
+						local target = lastEntity:GetCharacter()
+						if (target) then
+						      name = hookRun("GetCharacterName", lastEntity) or target:GetName()
+						end
 					else
 						infoPanel:SetEntity(lastEntity)
 					end
