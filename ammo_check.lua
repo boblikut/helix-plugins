@@ -1,3 +1,7 @@
+--////////////////////////////////////////////////
+--NOTICE: plugin is deprecated. This was my first public plugin. Probably i will remake it in future
+--\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
 local PLUGIN = PLUGIN
 
 PLUGIN.name = "Ammo chek"
