@@ -19,7 +19,14 @@ local batteries = {
 		description = "Regular battery",
 		model = "models/Items/battery.mdl",
 		amount = 50 -- how many energy will get flashlight if use it on this flashlight
-	}
+	},
+	inf_bat = {
+		name = "Battery",
+		description = "Regular battery",
+		model = "models/Items/battery.mdl",
+		amount = 10, -- how many energy will get flashlight if use it on this flashlight
+		isInfinite = true
+	},
 }
 
 function PLUGIN:InitializedPlugins()
@@ -40,6 +47,7 @@ function PLUGIN:InitializedPlugins()
 		ITEM.amount = v.amount or 50
 		ITEM.width = v.width or 1
 		ITEM.height = v.height or 1
+		ITEM.isInfinite = v.isInfinite
 	end
 end
 
