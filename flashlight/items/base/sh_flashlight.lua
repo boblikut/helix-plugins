@@ -88,8 +88,10 @@ ITEM.functions.combine = {
     OnRun = function(item, data)
         local another = ix.item.instances[data[1]]
         if another and another.base == "base_battery" then
-			item:SetData("energy", math.min(item:GetData("energy", 100) + another.amount, 100))
-            another:Remove()
+	    item:SetData("energy", math.min(item:GetData("energy", 100) + another.amount, 100))
+            if !another.isInfinite then
+		another:Remove()
+	    end
         end
         return false
     end,
