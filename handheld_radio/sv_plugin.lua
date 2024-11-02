@@ -50,7 +50,6 @@ end
 
 function PLUGIN:PlayerCanHearPlayersVoice(listener, talker)
 	if listener.isRadioSpeaking and talker.isRadioSpeaking then
-		print("test")
 		if listener.frequency == talker.frequency then
 			return true
 		end
