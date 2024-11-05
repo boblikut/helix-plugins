@@ -22,11 +22,16 @@ end)
 
 ITEM.functions.Frequency = {
 	OnRun = function(itemTable)
-		if !SERVER then return end
-		net.Start("FrequencyRequest")
-		net.WriteString(itemTable:GetData("frequency", "00.000"))
-		net.WriteInt(itemTable:GetID(), 32)
-		net.Send(itemTable.player)
+		local client = itemTable.player
+		client:RequestString("Radio panel", "Enter frequency:", function(text)
+			local reg = string.match(text, "^%d%d%.%d%d%d$")
+			if reg then
+				itemTable:SetData("frequency", reg)
+				client:Notify("You changed frequency of handheld radio on "..reg.."!")
+			else
+				client:Notify("You typed incorect frequency!")
+			end
+		end, itemTable:GetData("frequency", "00.000"))
 		return false
 	end
 }
@@ -47,8 +52,14 @@ ITEM.functions.Toggle = {
 		end
 
 		if (bCanToggle) then
-			itemTable:SetData("enabled", !itemTable:GetData("enabled", false))
+			local b = !itemTable:GetData("enabled", false)
+			itemTable:SetData("enabled", b)
 			itemTable.player:EmitSound("buttons/lever7.wav", 50, math.random(170, 180), 0.25)
+			if b then
+				itemTable.player.isRadioHearing = true
+			else
+				itemTable.player.isRadioHearing = false
+			end
 		else
 			itemTable.player:NotifyLocalized("radioAlreadyOn")
 		end
