@@ -1,23 +1,17 @@
 local PLUGIN = PLUGIN
 
-util.AddNetworkString("FrequencyRequest")
-util.AddNetworkString("FrequencyChanging")
 util.AddNetworkString("ForceSpeak")
 
-net.Receive("FrequencyChanging", function(len, client)
-	local frequency = net.ReadString()
-	local item_id = net.ReadInt(32)
-	
-	local character = client:GetCharacter()
+function PLUGIN:CharacterLoaded(character)
 	local inventory = character:GetInventory()
-	
+	if !inventory then return end
 	for item in inventory:Iter() do
-		if item:GetID() == item_id then
-			item:SetData("frequency", frequency)
+		if item.base == "base_radio" and item:GetData("enabled", false) then
+			character:GetPlayer().isRadioHearing = true
+			break
 		end
 	end
-	
-end)
+end
 
 function PLUGIN:PlayerButtonDown(client, button)
 	if button == KEY_T then
@@ -39,7 +33,7 @@ function PLUGIN:PlayerButtonDown(client, button)
 end
 
 function PLUGIN:PlayerButtonUp(client, button)
-	if button == KEY_T then
+	if button == KEY_T and client.isRadioSpeaking then
 		net.Start("ForceSpeak")
 		net.WriteBool(false)
 		net.Send(client)
@@ -49,7 +43,7 @@ function PLUGIN:PlayerButtonUp(client, button)
 end
 
 function PLUGIN:PlayerCanHearPlayersVoice(listener, talker)
-	if listener.isRadioSpeaking and talker.isRadioSpeaking then
+	if listener.isRadioHearing and talker.isRadioSpeaking then
 		if listener.frequency == talker.frequency then
 			return true
 		end
