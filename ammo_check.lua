@@ -13,11 +13,13 @@ function PLUGIN:CanDrawAmmoHUD(weapon)
 	return false
 end
 
+if !SERVER then return end
+
 local lastUse = 0
 
-local function checkDelay()
+local function checkDelay(ply)
 
-    if CurTime() > lastUse then
+    if CurTime() > ply.lastCheckAmmo then
 
         return true
     else
@@ -26,8 +28,8 @@ local function checkDelay()
     end
 end
 
-local function setDelay(delay)
-    lastUse = CurTime() + delay
+local function setDelay(delay, ply)
+    ply.lastCheckAmmo = CurTime() + delay
 end 
 
 local BanWeapons = {
@@ -41,9 +43,9 @@ hook.Add("PlayerButtonDown", "PressCheckButtun", function(ply, button)
 pcall(function() 
 local ActiveWeapon = ply:GetActiveWeapon():GetClass()
 
-if !BanWeapons[ActiveWeapon] and checkDelay() and button == KEY_O then
+if !BanWeapons[ActiveWeapon] and checkDelay(ply) and button == KEY_O then
 
-setDelay(3)
+setDelay(3, ply)
 ply.ShouldBreakAmmoCheck = false
 ply.ShouldStopSwitchWeapon = true
 
@@ -65,9 +67,9 @@ end)
 
 end
 
-if !BanWeapons[ActiveWeapon] and checkDelay() and button == KEY_I then
+if !BanWeapons[ActiveWeapon] and checkDelay(ply) and button == KEY_I then
 
-setDelay(3)
+setDelay(3, ply)
 ply.ShouldBreakAmmoCheck = false
 ply.ShouldStopSwitchWeapon = true
 
