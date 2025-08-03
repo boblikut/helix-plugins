@@ -20,9 +20,10 @@ local item_list = {
 
 function PLUGIN:InitializedPlugins() 
 	for _, v in pairs(ix.item.list) do
-		if !base_list[v.base] and !item_list[v.uniqueID] then
-			v.bDropOnDeath = true
-		end
+		if item_list[v.uniqueID] then continue end
+		if v.base and base_list[v.base] then continue end
+		v.bDropOnDeath = true
 	end
 end
+
 
