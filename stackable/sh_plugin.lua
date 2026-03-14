@@ -1,8 +1,8 @@
 local PLUGIN = PLUGIN
 
-PLUGIN.name = "Stuckable"
+PLUGIN.name = "Stackable"
 PLUGIN.author = "boblikut"
-PLUGIN.description = "Base for stuckable items"
+PLUGIN.description = "Base for stackable items"
 
 function PLUGIN:CanPlayerDropItem(client, id)
 	local item = ix.item.instances[id]
